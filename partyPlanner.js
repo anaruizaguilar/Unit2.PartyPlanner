@@ -27,6 +27,7 @@ function render(parties) {
             <p>${party.description}</p>
             <p>${party.date}</p>
             <p>${party.location}</p>
+            <button data-id="${party.id}">Delete Party</button>
         </section>`
         )
     }).join('');
@@ -62,6 +63,17 @@ formEl.addEventListener('submit', async (event) => {
         partyApp();
     } catch (err) {
         console.error(err);
+    }
+});
+
+mainEl.addEventListener('click', async (event) => {
+    if(event.target.matches('button')) {
+        const id = event.target.dataset.id;
+        //console.log(id);
+        await fetch(`${BASE_URL}/${id}`, {
+            method: `DELETE`,
+        });
+        partyApp();
     }
 });
 
